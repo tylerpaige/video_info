@@ -3,6 +3,12 @@
     before(:all) do
       VideoInfo.provider_api_keys = {vimeo: api_key}
     end
+    let(:nonexistent_video) { VideoInfo.new("http://vimeo.com/59312311") }
+    let(:password_protected_video) { VideoInfo.new("http://vimeo.com/74636562") }
+    let(:public_video) { VideoInfo.new("http://vimeo.com/136971428") }
+    let(:unlisted_video) { VideoInfo.new("https://vimeo.com/1146070777/d19a55e8aa") }
+    let(:video_in_group) { VideoInfo.new("http://vimeo.com/groups/1234/videos/898029") }
+    let(:player_vimeo_video) { VideoInfo.new("http://player.vimeo.com/video/898029") }
 
     describe ".usable?" do
       subject { VideoInfo::Providers::Vimeo.usable?(url) }
@@ -51,7 +57,7 @@
 
     describe "#available?" do
       context "with valid video" do
-        subject { VideoInfo.new("http://vimeo.com/98605382") }
+        subject { public_video }
 
         describe "#available?" do
           it { is_expected.to be_available }
@@ -59,7 +65,7 @@
       end
 
       context "with 'this video does not exist' video" do
-        subject { VideoInfo.new("http://vimeo.com/59312311") }
+        subject { nonexistent_video }
 
         describe "#available?" do
           it { is_expected.to_not be_available }
@@ -67,7 +73,7 @@
       end
 
       context "with 'password required' video" do
-        subject { VideoInfo.new("http://vimeo.com/74636562") }
+        subject { password_protected_video }
 
         describe "#available?" do
           it { is_expected.to_not be_available }
@@ -76,7 +82,7 @@
     end
 
     context "with video 136971428" do
-      subject { VideoInfo.new("https://vimeo.com/136971428") }
+      subject { public_video }
 
       describe "#provider" do
         subject { super().provider }
@@ -222,7 +228,7 @@
     end
 
     context "with video 898029 and url_attributes" do
-      subject { VideoInfo.new("http://www.vimeo.com/898029") }
+      subject { public_video }
 
       it "should add URL attribute" do
         attributes = {autoplay: 1}
@@ -232,7 +238,7 @@
     end
 
     context "with video 898029 and iframe_attributes" do
-      subject { VideoInfo.new("http://www.vimeo.com/898029") }
+      subject { public_video }
 
       it "should have proper dimensions" do
         dimensions = {width: 800, height: 600}
@@ -243,7 +249,7 @@
     end
 
     context "with video 898029 in /group/ url" do
-      subject { VideoInfo.new("http://vimeo.com/groups/1234/videos/898029") }
+      subject { video_in_group }
 
       describe "#provider" do
         subject { super().provider }
@@ -257,7 +263,7 @@
     end
 
     context "with video 898029 in /group/ url" do
-      subject { VideoInfo.new("http://player.vimeo.com/video/898029") }
+      subject { player_vimeo_video }
 
       describe "#provider" do
         subject { super().provider }

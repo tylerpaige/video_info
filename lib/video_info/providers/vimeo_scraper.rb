@@ -42,18 +42,10 @@ class VideoInfo
 
         if data.nil?
           is_available = false
-        elsif is_available
-          # Password-protected videos typically don't have the JSON-LD script tag
-          # that contains video metadata. Check if it exists.
-          json_ld_script = data.css("script").detect do |n|
-            type = n.attr("type")
-            !type.nil? && type.value == "application/ld+json"
-          end
+        end
 
-          # If JSON-LD is missing, the video is likely password-protected or unavailable
-          if json_ld_script.nil?
-            is_available = false
-          end
+        if json_info.nil?
+          is_available = false
         end
 
         is_available
@@ -147,16 +139,25 @@ class VideoInfo
       end
 
       def json_info
-        @json_info ||= JSON.parse(data.css("script").detect do |n|
-          type = n.attr("type")
+        @json_info ||= begin
+          return nil if data.nil?
 
-          if type.nil?
-            false
-          else
-            type.value == "application/ld+json"
+          script_elements = data.css("script")
+          script_element = script_elements.detect do |n|
+            type = n.attr("type")
+            if type.nil?
+              false
+            else
+              type.value == "application/ld+json"
+            end
           end
-        end.text)[0]
+          return nil if script_element.nil?
+          JSON.parse(script_element.text)[0]
+        rescue JSON::ParserError
+          nil
+        end
       end
+
 
       def thumbnail_url
         @thumbnail_url ||= remove_overlay(meta_node_value("og:image"))
