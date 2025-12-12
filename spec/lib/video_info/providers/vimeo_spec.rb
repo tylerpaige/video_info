@@ -3,18 +3,18 @@
     before(:all) do
       VideoInfo.provider_api_keys = {vimeo: api_key}
     end
-    let(:nonexistent_video) { VideoInfo.new("http://vimeo.com/59312311") }
-    let(:password_protected_video) { VideoInfo.new("http://vimeo.com/74636562") }
-    let(:public_video) { VideoInfo.new("http://vimeo.com/136971428") }
+    let(:nonexistent_video) { VideoInfo.new("https://vimeo.com/59312311") }
+    let(:password_protected_video) { VideoInfo.new("https://vimeo.com/74636562") }
+    let(:public_video) { VideoInfo.new("https://vimeo.com/136971428") }
     let(:unlisted_video) { VideoInfo.new("https://vimeo.com/1146070777/d19a55e8aa") }
-    let(:video_in_group) { VideoInfo.new("http://vimeo.com/groups/1234/videos/898029") }
-    let(:player_vimeo_video) { VideoInfo.new("http://player.vimeo.com/video/898029") }
+    let(:video_in_group) { VideoInfo.new("https://vimeo.com/groups/1234/videos/898029") }
+    let(:player_vimeo_video) { VideoInfo.new("https://player.vimeo.com/video/898029") }
 
     describe ".usable?" do
       subject { VideoInfo::Providers::Vimeo.usable?(url) }
 
       context "with vimeo url" do
-        let(:url) { "http://www.vimeo.com/898029" }
+        let(:url) { "https://www.vimeo.com/898029" }
         it { is_expected.to be_truthy }
       end
 
@@ -35,22 +35,22 @@
       end
 
       context "with vimeo album url" do
-        let(:url) { "http://vimeo.com/album/2755718" }
+        let(:url) { "https://vimeo.com/album/2755718" }
         it { is_expected.to be_falsey }
       end
 
       context "with vimeo user url" do
-        let(:url) { "http://vimeo.com/user123456789" }
+        let(:url) { "https://vimeo.com/user123456789" }
         it { is_expected.to be_falsey }
       end
 
       context "with vimeo hubnub embed url" do
-        let(:url) { "http://player.vimeo.com/hubnut/album/2755718" }
+        let(:url) { "https://player.vimeo.com/hubnut/album/2755718" }
         it { is_expected.to be_falsey }
       end
 
       context "with other url" do
-        let(:url) { "http://www.youtube.com/898029" }
+        let(:url) { "https://www.youtube.com/898029" }
         it { is_expected.to be_falsey }
       end
     end
@@ -277,8 +277,8 @@
     end
 
     context "with video 898029 in text" do
-      video_url_in_text = '<a href="http://www.vimeo.com/898029">' \
-                          "http://www.vimeo.com/898029</a>"
+      video_url_in_text = '<a href="https://www.vimeo.com/898029">' \
+                          "https://www.vimeo.com/898029</a>"
       subject { VideoInfo.new(video_url_in_text) }
 
       describe "#provider" do
@@ -308,7 +308,7 @@
     end
 
     context "with video 126641548 in /user*/review/126641548/* url" do
-      video_url = "http://www.vimeo.com/user39798190/review/126641548/8a56234e32"
+      video_url = "https://www.vimeo.com/user39798190/review/126641548/8a56234e32"
       subject { VideoInfo.new(video_url) }
 
       its(:provider) { should eq "Vimeo" }
