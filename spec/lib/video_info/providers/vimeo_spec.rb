@@ -192,18 +192,10 @@
       describe "#author_thumbnail" do
         subject { super().author_thumbnail }
 
-        #
-        # For some reason, the scraper returns an image URL without
-        # a file extension. This will likely change in the future.
-        #
-
-        thumbnail_url = "https://i.vimeocdn.com/portrait/14790276_75x75"
-
-        if api_key
-          thumbnail_url += ".jpg"
-        end
-
-        it { is_expected.to eq thumbnail_url }
+        # NOTE: The scraper gets an image URL from the JSON-LD script tag,
+        # but it's a different size than what we get from the API.
+        # Therefore this test just checks that the URL starts with the expected prefix.
+        it { is_expected.to start_with "https://i.vimeocdn.com/portrait/14790276" }
       end
 
       describe "#author" do
