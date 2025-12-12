@@ -23,7 +23,7 @@ class VideoInfo
       end
 
       def embed_url
-        "//player.vimeo.com/video/#{video_id}"
+        "https://player.vimeo.com/video/#{video_id}"
       end
 
       private
