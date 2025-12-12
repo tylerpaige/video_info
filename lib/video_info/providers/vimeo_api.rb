@@ -7,6 +7,25 @@ class VideoInfo
         VideoInfo.provider_api_keys[:vimeo]
       end
 
+      def available?
+        is_available = super
+
+        if is_available
+          # For password-protected videos, the API might return 200 on HEAD
+          # but fail or return incomplete data on GET. Try to access the video data.
+          begin
+            video_data = _video
+            # Check if we have the essential video data
+            is_available = !video_data.nil? && !video_data["name"].nil?
+          rescue VideoInfo::HttpError
+            # If we get an HTTP error (like 401), the video is not available
+            is_available = false
+          end
+        end
+
+        is_available
+      end
+
       %w[description].each do |method|
         define_method(method) { _video[method] }
       end

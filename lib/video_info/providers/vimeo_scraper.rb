@@ -43,9 +43,15 @@ class VideoInfo
         if data.nil?
           is_available = false
         elsif is_available
-          password_elements = data.css(".exception_title--password")
+          # Password-protected videos typically don't have the JSON-LD script tag
+          # that contains video metadata. Check if it exists.
+          json_ld_script = data.css("script").detect do |n|
+            type = n.attr("type")
+            !type.nil? && type.value == "application/ld+json"
+          end
 
-          unless password_elements.empty?
+          # If JSON-LD is missing, the video is likely password-protected or unavailable
+          if json_ld_script.nil?
             is_available = false
           end
         end
