@@ -15,20 +15,7 @@ class VideoInfo
           return nil
         end
 
-        split_point = "window.vimeo.clip_page_config ="
-        script_tags = data.css("script")
-
-        script_index = script_tags.find_index do |x|
-          x.text.include?(split_point)
-        end
-
-        script_text = script_tags[script_index].text
-
-        split_script_text = script_text.split(split_point)[1]
-
-        parsed_data = JSON.parse(split_script_text.split(";\n")[0])
-
-        parsed_data["owner"]["portrait"]["src"]
+        json_info["author"]["image"]
       end
 
       def author_url
