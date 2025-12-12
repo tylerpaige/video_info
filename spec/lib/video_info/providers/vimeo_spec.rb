@@ -3,12 +3,14 @@
     before(:all) do
       VideoInfo.provider_api_keys = {vimeo: api_key}
     end
+
     let(:nonexistent_video) { VideoInfo.new("https://vimeo.com/59312311") }
     let(:password_protected_video) { VideoInfo.new("https://vimeo.com/74636562") }
     let(:public_video) { VideoInfo.new("https://vimeo.com/136971428") }
     let(:unlisted_video) { VideoInfo.new("https://vimeo.com/1146070777/d19a55e8aa") }
     let(:video_in_group) { VideoInfo.new("https://vimeo.com/groups/1234/videos/898029") }
     let(:player_vimeo_video) { VideoInfo.new("https://player.vimeo.com/video/898029") }
+    let(:video_with_stats) { VideoInfo.new("https://vimeo.com/7848846") }
 
     describe ".usable?" do
       subject { VideoInfo::Providers::Vimeo.usable?(url) }
@@ -351,7 +353,7 @@
     end
 
     context "with video 7848846" do
-      subject { VideoInfo.new("https://vimeo.com/7848846") }
+      subject { video_with_stats }
 
       its(:stats) {
         if api_key

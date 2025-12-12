@@ -8,7 +8,69 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - VideoInfo/4.0.0
+      - VideoInfo/4.2.0
+      Authorization:
+      - bearer vimeo_access_token
+      Accept:
+      - application/vnd.vimeo.*+json;version=3.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 405
+      message: Method Not Allowed
+    headers:
+      Date:
+      - Fri, 12 Dec 2025 21:46:37 GMT
+      Content-Type:
+      - application/json
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - 9ad06a612feac60f-EWR
+      Allow:
+      - GET,DELETE,PATCH,VALIDATE,OPTIONS
+      X-Bapp-Server:
+      - api-55d8969dd9-znh7k
+      X-Backend-Server:
+      - api-55d8969dd9-znh7k
+      Accept-Ranges:
+      - bytes
+      Via:
+      - 1.1 varnish, 1.1 varnish
+      X-Served-By:
+      - cache-iad-kiad7000117-IAD, cache-lga21988-LGA
+      X-Cache:
+      - MISS, MISS
+      X-Cache-Hits:
+      - 0, 0
+      X-Timer:
+      - S1765575998.632937,VS0,VE46
+      Vary:
+      - x-http-method-override
+      Cf-Cache-Status:
+      - DYNAMIC
+      Set-Cookie:
+      - __cf_bm=4B0m4y79M6camhaMn0NbGtcLuZu4oLWJbLHN1nWJFeU-1765575997-1.0.1.1-NmK4iw1gIqKxYppbsHvp1Sx5eNdxmw7GykFdF2RXvzttmFy2oW787MmLIhDFvCh9;
+        path=/; expires=Fri, 12-Dec-25 22:16:37 GMT; domain=.vimeo.com; HttpOnly;
+        Secure; SameSite=None
+      - _cfuvid=bX0oYk8Qs3o2QKjR6EuTKpXyp89BZOLekDVHmFXjMpo-1765575997681-0.0.1.1-604800000;
+        path=/; domain=.vimeo.com; HttpOnly; Secure; SameSite=None
+      Server:
+      - cloudflare
+    body:
+      encoding: UTF-8
+      string: ''
+  recorded_at: Fri, 12 Dec 2025 21:46:37 GMT
+- request:
+    method: get
+    uri: https://api.vimeo.com/videos/74636562
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - VideoInfo/4.2.0
       Authorization:
       - bearer vimeo_access_token
       Accept:
@@ -21,57 +83,70 @@ http_interactions:
       message: Bad Request
     headers:
       Date:
-      - Fri, 27 Oct 2023 15:21:52 GMT
+      - Fri, 12 Dec 2025 21:46:37 GMT
       Content-Type:
       - application/vnd.vimeo.error+json
       Content-Length:
-      - '468'
+      - '488'
       Connection:
       - keep-alive
+      Cf-Ray:
+      - 9ad06a623a9aef9d-EWR
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains; preload
       X-Ratelimit-Limit:
-      - '50'
+      - '250'
       X-Ratelimit-Remaining:
-      - '44'
+      - '244'
       X-Ratelimit-Reset:
-      - '2023-10-27T15:22:51+00:00'
+      - '2025-12-12T21:47:36+00:00'
+      X-Actionlimit-Limit:
+      - '15'
+      X-Actionlimit-Remaining:
+      - '15'
+      X-Actionlimit-Reset:
+      - '2025-12-12T21:47:13+00:00'
       Cache-Control:
       - no-store, no-cache, max-age=0
       Request-Hash:
-      - 8120ff27
+      - 82e28a56
       X-Vimeo-Error:
       - 'true'
       X-Bapp-Server:
-      - api-8464b5896b-9kxxs
+      - api-55d8969dd9-jxh6r
       X-Backend-Server:
-      - api-k8s
+      - api-55d8969dd9-jxh6r
       Accept-Ranges:
       - bytes
       Via:
       - 1.1 varnish, 1.1 varnish
       X-Served-By:
-      - cache-iad-kiad7000093-IAD, cache-mad22032-MAD
+      - cache-iad-kcgs7200085-IAD, cache-lga21967-LGA
       X-Cache:
       - MISS, MISS
       X-Cache-Hits:
       - 0, 0
       X-Timer:
-      - S1698420113.633962,VS0,VE248
+      - S1765575998.813237,VS0,VE97
       Vary:
       - x-http-method-override
       Cf-Cache-Status:
       - DYNAMIC
       Set-Cookie:
-      - __cf_bm=esUoLQDvXDU0CbTFuay_uXXDip0BpjiKErsMysL1tXg-1698420112-0-AeyV1ZurJB6m0oX4RIlx2mSLcRmeIntTAi9e3ZZW/0upDxziOlD6Kj6bjWBJ4QBJdyRlpON+OU0tU/PpWMjNJEQ=;
-        path=/; expires=Fri, 27-Oct-23 15:51:52 GMT; domain=.vimeo.com; HttpOnly;
+      - __cf_bm=y0zUo_KPAwL51pej7xAcdEka6eWArZn0WEjesCePAAY-1765575997-1.0.1.1-CBShMRa.hQDIxxUT29Y8UIwqqtXFIF56pJcG_L9JN9CF3HfNFl_Ki_GMWodJzJsM;
+        path=/; expires=Fri, 12-Dec-25 22:16:37 GMT; domain=.vimeo.com; HttpOnly;
         Secure; SameSite=None
+      - _cfuvid=rXcRzl.zOQbDypiG_6Bh1CogN7BJ0PRH2lQwMr_MrvE-1765575997914-0.0.1.1-604800000;
+        path=/; domain=.vimeo.com; HttpOnly; Secure; SameSite=None
       Server:
       - cloudflare
-      Cf-Ray:
-      - 81cbee67d9e71940-BCN
     body:
       encoding: UTF-8
-      string: ''
-  recorded_at: Fri, 27 Oct 2023 15:21:52 GMT
-recorded_with: VCR 6.1.0
+      string: '{"invalid_parameters":[{"field":"password","error_code":2223,"error":"Please
+        enter a valid password.","developer_message":"The user didn''t enter a password
+        for a password-protected video."}],"error":"The application has received an
+        invalid parameter. Please get in touch with the app''s creator.","link":null,"developer_message":"The
+        parameters passed to this API endpoint didn''t pass Vimeo''s validation. Please
+        check the `invalid_parameters` list for more information.","error_code":2204}'
+  recorded_at: Fri, 12 Dec 2025 21:46:37 GMT
+recorded_with: VCR 6.3.1
