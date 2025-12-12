@@ -3,12 +3,12 @@
     before(:all) do
       VideoInfo.provider_api_keys = {vimeo: api_key}
     end
-    let(:nonexistent_video) { VideoInfo.new("http://vimeo.com/59312311") }
-    let(:password_protected_video) { VideoInfo.new("http://vimeo.com/74636562") }
-    let(:public_video) { VideoInfo.new("http://vimeo.com/136971428") }
+    let(:nonexistent_video) { VideoInfo.new("https://vimeo.com/59312311") }
+    let(:password_protected_video) { VideoInfo.new("https://vimeo.com/74636562") }
+    let(:public_video) { VideoInfo.new("https://vimeo.com/136971428") }
     let(:unlisted_video) { VideoInfo.new("https://vimeo.com/1146070777/d19a55e8aa") }
-    let(:video_in_group) { VideoInfo.new("http://vimeo.com/groups/1234/videos/898029") }
-    let(:player_vimeo_video) { VideoInfo.new("http://player.vimeo.com/video/898029") }
+    let(:video_in_group) { VideoInfo.new("https://vimeo.com/groups/1234/videos/898029") }
+    let(:player_vimeo_video) { VideoInfo.new("https://player.vimeo.com/video/898029") }
 
     describe ".usable?" do
       subject { VideoInfo::Providers::Vimeo.usable?(url) }
@@ -101,14 +101,27 @@
 
       describe "#embed_url" do
         subject { super().embed_url }
-        it { is_expected.to eq "//player.vimeo.com/video/136971428" }
+
+        it do
+          if api_key
+            is_expected.to eq "https://player.vimeo.com/video/136971428?h=b646dcf635"
+          else
+            is_expected.to eq "https://player.vimeo.com/video/136971428"
+          end
+        end
       end
 
       describe "#embed_code" do
         subject { super().embed_code }
-        embed_code = '<iframe src="//player.vimeo.com/video/136971428?' \
-                     'title=0&byline=0&portrait=0&autoplay=0" ' \
-                     'frameborder="0"></iframe>'
+        if api_key
+          embed_code = '<iframe src="https://player.vimeo.com/video/136971428?' \
+                       'h=b646dcf635&title=0&byline=0&portrait=0&autoplay=0" ' \
+                       'frameborder="0"></iframe>'
+        else
+          embed_code = '<iframe src="https://player.vimeo.com/video/136971428?' \
+                       'title=0&byline=0&portrait=0&autoplay=0" ' \
+                       'frameborder="0"></iframe>'
+        end
         it { is_expected.to eq embed_code }
       end
 
@@ -192,18 +205,7 @@
       describe "#author_thumbnail" do
         subject { super().author_thumbnail }
 
-        #
-        # For some reason, the scraper returns an image URL without
-        # a file extension. This will likely change in the future.
-        #
-
-        thumbnail_url = "https://i.vimeocdn.com/portrait/14790276_75x75"
-
-        if api_key
-          thumbnail_url += ".jpg"
-        end
-
-        it { is_expected.to eq thumbnail_url }
+        it { is_expected.to start_with "https://i.vimeocdn.com/portrait/14790276_" }
       end
 
       describe "#author" do
