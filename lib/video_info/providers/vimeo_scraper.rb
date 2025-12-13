@@ -15,20 +15,7 @@ class VideoInfo
           return nil
         end
 
-        split_point = "window.vimeo.clip_page_config ="
-        script_tags = data.css("script")
-
-        script_index = script_tags.find_index do |x|
-          x.text.include?(split_point)
-        end
-
-        script_text = script_tags[script_index].text
-
-        split_script_text = script_text.split(split_point)[1]
-
-        parsed_data = JSON.parse(split_script_text.split(";\n")[0])
-
-        parsed_data["owner"]["portrait"]["src"]
+        json_info["author"]["image"]
       end
 
       def author_url
@@ -42,12 +29,10 @@ class VideoInfo
 
         if data.nil?
           is_available = false
-        elsif is_available
-          password_elements = data.css(".exception_title--password")
+        end
 
-          unless password_elements.empty?
-            is_available = false
-          end
+        if json_info.nil?
+          is_available = false
         end
 
         is_available
@@ -141,16 +126,25 @@ class VideoInfo
       end
 
       def json_info
-        @json_info ||= JSON.parse(data.css("script").detect do |n|
-          type = n.attr("type")
+        @json_info ||= begin
+          return nil if data.nil?
 
-          if type.nil?
-            false
-          else
-            type.value == "application/ld+json"
+          script_elements = data.css("script")
+          script_element = script_elements.detect do |n|
+            type = n.attr("type")
+            if type.nil?
+              false
+            else
+              type.value == "application/ld+json"
+            end
           end
-        end.text)[0]
+          return nil if script_element.nil?
+          JSON.parse(script_element.text)[0]
+        rescue JSON::ParserError
+          nil
+        end
       end
+
 
       def thumbnail_url
         @thumbnail_url ||= remove_overlay(meta_node_value("og:image"))
