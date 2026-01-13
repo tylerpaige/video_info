@@ -110,12 +110,12 @@
 
       describe "#embed_code" do
         subject { super().embed_code }
-        if api_key
-          embed_code = '<iframe src="https://player.vimeo.com/video/136971428?' \
+        embed_code = if api_key
+          '<iframe src="https://player.vimeo.com/video/136971428?' \
                        'h=b646dcf635&title=0&byline=0&portrait=0&autoplay=0" ' \
                        'frameborder="0"></iframe>'
         else
-          embed_code = '<iframe src="//player.vimeo.com/video/136971428?' \
+          '<iframe src="//player.vimeo.com/video/136971428?' \
                        'title=0&byline=0&portrait=0&autoplay=0" ' \
                        'frameborder="0"></iframe>'
         end

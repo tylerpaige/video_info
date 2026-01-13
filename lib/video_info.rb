@@ -56,8 +56,8 @@ class VideoInfo
     @provider = _select_provider(url, options)
   end
 
-  def self.get(*args)
-    new(*args)
+  def self.get(*)
+    new(*)
   end
 
   def self.usable?(url)
