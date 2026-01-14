@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = ">= 3.2.0"
 
   s.add_dependency "iso8601", "~> 0.13.0"
+  s.add_dependency "logger", ">= 1.6"
   s.add_dependency "oga", "~> 3.4"
   s.add_dependency "net_http_timeout_errors", "~> 1.0.0"
 
