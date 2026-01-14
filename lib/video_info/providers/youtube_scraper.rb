@@ -97,7 +97,8 @@ class VideoInfo
         end
 
         return unless node
-        node&.attr("content") && node.attr("content").value
+
+        node.attr("content")&.value
       end
 
       def itemprop_node_value(name)
