@@ -29,9 +29,7 @@ class VideoInfo
     end
 
     def logger
-      @logger ||= Logger.new($stdout).tap do |lgr|
-        lgr.progname = name
-      end
+      @logger ||= Logger.new($stdout, progname: name)
     end
   end
 
